@@ -1,0 +1,23 @@
+{
+  "name": "labanodejs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/turbokwaka/labaNodeJs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/turbokwaka/labaNodeJs/issues"
+  },
+  "homepage": "https://github.com/turbokwaka/labaNodeJs#readme",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
