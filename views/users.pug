@@ -1,0 +1,20 @@
+doctype html
+html(lang="uk")
+    head
+        meta(charset="UTF-8")
+        title= title
+    body
+        h1= title
+        ul
+            each user in users
+                li
+                    strong= user.name
+                    |  – #{user.role}
+                    if user.company
+                        |  у #{user.company}
+                    if user.skills
+                        ul
+                            each skill in user.skills
+                                li #{skill}
+        p
+            a(href="/") ← Назад на головну
