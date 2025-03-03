@@ -8,9 +8,10 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var aboutRouter = require('./routes/about');
 
-app.use('/about', aboutRouter);
 
 var app = express();
+
+app.use('/about', aboutRouter);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
