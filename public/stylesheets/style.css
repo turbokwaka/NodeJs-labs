@@ -4,5 +4,13 @@ body {
 }
 
 a {
-  color: #00B7FF;
+  color: yellowgreen;
+}
+
+.linka {
+  color: mediumpurple;
+}
+
+.valerka{
+  color: seagreen ;
 }
