@@ -4,7 +4,7 @@ const ticketService = require('../services/ticketService');
 async function listSessions(req, res, next) {
     try {
         const sessions = await sessionService.getAllSessions();
-        res.render('admin/sessions/index', {sessions});
+        res.render('guest/sessions', {sessions});
     } catch (error) {
         console.error('Помилка отримання сеансів:', error);
         res.status(500).render('error', {message: 'Внутрішня помилка сервера'});
@@ -16,7 +16,7 @@ async function sessionDetails(req, res, next) {
         const {id} = req.params;
 
         const session = await sessionService.getSessionById(id);
-        res.render('sessions/show', {session});
+        res.render('guest/sessionDetails', {session});
     } catch (error) {
         console.error('Помилка при перегляді сеансу. ', error);
         res.status(500).render('error', {message: 'Помилка сервера. Спробуйте пізніше'})
@@ -34,7 +34,7 @@ async function orderTicket(req, res, next) {
         const result = await ticketService.orderTicket(session_id, seat_id);
 
         if (result.success) {
-            res.render('orderSuccess', {ticket: result.data});
+            res.render('guest/orderTicket', {ticket: result.data});
         } else {
             res.status(400).render('error', {message: result.error || 'Не вдалося оформити замовлення.'});
         }

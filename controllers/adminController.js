@@ -3,7 +3,7 @@ const sessionService = require('../services/sessionService');
 async function listSessions(req, res, next) {
     try {
         const sessions = await sessionService.getAllSessions();
-        res.render('admin/sessions/index', {sessions});
+        res.render('admin/session', {sessions});
     } catch (error) {
         console.error('Помилка отримання сеансів:', error);
         res.status(500).render('error', {message: 'Внутрішня помилка сервера'});
@@ -14,7 +14,7 @@ async function listSessions(req, res, next) {
  * Форма створення нової сесії
  */
 function showCreateSession(req, res) {
-    res.render('admin/sessions/create');
+    res.render('admin/createSession');
 }
 
 /**
@@ -24,12 +24,12 @@ async function createSession(req, res, next) {
     try {
         const sessionData = req.body;
         await sessionService.createSession(sessionData);
-        res.redirect('/admin/sessions');
+        res.redirect('admin/sessions');
     } catch (error) {
         console.error('Помилка створення сеансу:', error);
         res
             .status(400)
-            .render('admin/sessions/create', {error: 'Не вдалося створити сеанс', data: req.body});
+            .render('error', {message: 'хуйня трапляється'});
     }
 }
 
@@ -42,7 +42,7 @@ async function showEditSession(req, res, next) {
         if (!session) {
             return res.status(404).render('error', {message: 'Сеанс не знайдено.'});
         }
-        res.render('admin/sessions/edit', {session});
+        res.render('admin/editSession', {session});
     } catch (error) {
         console.error('Помилка відображення форми редагування:', error);
         res.status(500).render('error', {message: 'Внутрішня помилка сервера.'});
@@ -59,7 +59,7 @@ async function updateSession(req, res, next) {
         if (result.error) {
             return res
                 .status(400)
-                .render('admin/sessions/edit', {session: updatedData, error: result.error});
+                .render('error', {message: result.error});
         }
         res.redirect('/admin/sessions');
     } catch (error) {
