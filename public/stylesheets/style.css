@@ -1,0 +1,75 @@
+body {
+    font-family: sans-serif;
+    background-color: #f8f8f8;
+    margin: 0;
+    padding: 20px;
+}
+
+.title {
+    font-size: 24px;
+    margin-bottom: 16px;
+}
+
+.session-list {
+    list-style: none;
+    padding: 0;
+}
+
+.session-item {
+    background: #fff;
+    margin-bottom: 12px;
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 0 0 4px rgba(0,0,0,0.1);
+}
+
+.button {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 6px 12px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+.button:hover {
+    background: #0056b3;
+}
+
+.seats {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+}
+
+.seat {
+    margin: 6px;
+    padding: 10px;
+    border-radius: 6px;
+    background-color: #e0e0e0;
+    min-width: 60px;
+    text-align: center;
+}
+
+.seat.available {
+    background-color: #d4edda;
+}
+
+.seat.taken {
+    background-color: #f8d7da;
+}
+
+button {
+    margin-top: 6px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button.disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}

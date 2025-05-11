@@ -1,0 +1,26 @@
+extends ../layouts/guestLayout
+
+block content
+    h1.title Деталі сеансу
+
+    .session-info
+        p Назва: #{session.title}
+        p Час початку: #{session.startTime}
+        p Ціна: #{session.price} грн
+
+    if Array.isArray(seats) && seats.length > 0
+        h3 Вільні місця
+
+        ul.seats
+            each seat in seats
+                li.seat(class=seat.isAvailable ? 'available' : 'taken')
+                    span Місце #{seat.number}
+                    if seat.isAvailable
+                        form(action='/order', method='post')
+                            input(type='hidden', name='sessionId', value=session.id)
+                            input(type='hidden', name='seatId', value=seat.id)
+                            button(type='submit') Замовити
+                    else
+                        button.disabled(type='button' disabled) Зайнято
+    else
+        p Немає вільних місць

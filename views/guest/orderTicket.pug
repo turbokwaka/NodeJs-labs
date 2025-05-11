@@ -1,0 +1,12 @@
+extends ../layouts/guestLayout
+
+block content
+    h1.title Підтвердження замовлення
+
+    .confirmation
+        p Ви успішно замовили квиток на сеанс "#{session.title}"
+        p Час початку: #{session.startTime}
+        p Місце: #{seat.number}
+        p Ціна: #{session.price} грн
+
+        a.button(href='/sessions') Повернутися до списку сеансів

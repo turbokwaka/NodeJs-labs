@@ -1,0 +1,12 @@
+extends ../layouts/guestLayout
+
+block content
+    h1.title Список сеансів
+
+    ul.session-list
+        each session in sessions
+            li.session-item
+                h2.session-title= session.title
+                p Час початку: #{session.startTime}
+                p Ціна: #{session.price} грн
+                a.button(href=`/sessions/${session.id}`) Переглянути
