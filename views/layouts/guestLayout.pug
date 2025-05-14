@@ -3,13 +3,12 @@ html(lang='en')
     head
         meta(charset='UTF-8')
         title Кінотеатр
-        link(rel='stylesheet', href='../stylesheets/style.css')
+        link(rel='stylesheet', href='/stylesheets/style.css')
     body
         header
             h1 Кінотеатр "BobryPlex"
-            nav
+            nav.header-menu
                 a(href='/') Головна
-                a(href='/sessions') Сеанси
         main
             block content
         footer
