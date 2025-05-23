@@ -1,15 +1,9 @@
 doctype html
-html(lang='en')
+html(lang="en")
     head
-        meta(charset='UTF-8')
-        title Кінотеатр
-        link(rel='stylesheet', href='/stylesheets/style.css')
+        meta(charset="UTF-8")
+        title BobryPlex
+        block styles
     body
-        header
-            h1 Кінотеатр "BobryPlex"
-            nav.header-menu
-                a(href='/') Головна
-        main
-            block content
-        footer
-            p © 2025. Всі права захищені.
+        block content
+        block scripts

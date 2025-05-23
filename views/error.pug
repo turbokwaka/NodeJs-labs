@@ -1,5 +1,4 @@
-h1= message
-if error && error.status
-    h2= error.status
-if error && error.stack
-    pre #{error.stack}
+block content
+    head
+        link(rel='stylesheet', href='/stylesheets/style.css')
+    h1.error-message= message
