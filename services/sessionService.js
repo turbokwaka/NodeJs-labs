@@ -4,7 +4,7 @@ async function getAllSessions() {
     try {
         const pool = await poolPromise;
         const result = await pool.request().query(`
-            SELECT sessions.*, movies.title, movies.genre
+            SELECT sessions.*, movies.title, movies.genre, movies.poster_url
             FROM sessions
             JOIN movies ON sessions.movie_id = movies.id
             ORDER BY start_time

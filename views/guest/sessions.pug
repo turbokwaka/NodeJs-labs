@@ -1,12 +1,28 @@
 extends ../layouts/guestLayout
 
-block content
-    h1.title Список сеансів
+block styles
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&family=Fredoka:wght@300..700&family=Goldman:wght@400;700&family=Indie+Flower&family=Jersey+15&family=Libre+Baskerville&family=Modak&family=Press+Start+2P&family=Roboto:ital,wght@0,100..900;1,100..900&family=Saira+Stencil+One&family=Sniglet:wght@800&family=Tiny5&display=swap')
 
-    ul.session-list
-        each session in sessions
-            li.session-item
-                h2.session-title= session.title
-                p Час початку: #{session.startTime}
-                p Ціна: #{session.price} грн
-                a.button(href=`/sessions/${session.id}`) Переглянути
+block content
+    header
+        button BobryPlex
+        nav
+            a(href='#') Link1
+            a(href='#') Link2
+            a(href='#') Link3
+            a(href='#') Link4
+
+    section.carousel-wrapper
+        .carousel
+            each session in sessions
+                a.film(href=`/sessions/${session.id}`)
+                    img.img(src=session.poster_url)
+                    .overlay
+                        h2.film-name= session.title
+
+            button.btn.btn--left &lt;
+            button.btn.btn--right &gt;
+
+block scripts
+    script(defer src='/stylesheets/main-page-script.js')
