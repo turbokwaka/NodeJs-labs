@@ -1,0 +1,23 @@
+extends ../layouts/adminLayout.pug
+
+
+block content
+    h2 Створити новий сеанс
+
+    form(action="/admin/sessions", method="POST")
+        label(for="movie_id") ID фільму
+        input(id="movie_id" type="number", name="movie_id", required)
+
+        label(for="start_time") Час початку
+        input(id="start_time" type="datetime-local", name="start_time", required)
+
+        label(for="hall_name") Назва залу
+        input(id="hall_name" type="text", name="hall_name", required)
+
+        label(for="total_seats") Кількість місць
+        input(id="total_seats" type="number", name="total_seats", required)
+
+        label(for="background_image_url") Фонове зображення (URL)
+        input(id="background_image_url" type="url", name="background_image_url")
+
+        button(type="submit") Створити сеанс

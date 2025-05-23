@@ -1,0 +1,28 @@
+extends ../layouts/adminLayout.pug
+
+
+block content
+    h1 Редагувати сеанс
+
+    if error
+        p(style="color: red") #{error}
+    if success
+        p(style="color: green") #{success}
+
+    form(method="post", action=`/admin/sessions/${session.id}`)
+        p Фільм ID: #{session.movie_id}
+
+        label(for="start_time") Час початку (YYYY-MM-DD HH:MM):
+        input(id="start_time" type="text", name="start_time", value=session.start_time, required)
+
+        label(for="hall_name") Назва залу:
+        input(id="hall_name" type="text", name="hall_name", value=session.hall_name, required)
+
+        label(for="total_seats") Кількість місць:
+        input(id="total_seats" type="number", name="total_seats", value=session.total_seats, required)
+
+        label(for="background_image_url") URL зображення:
+        input(id="background_image_url" type="text", name="background_image_url", value=session.background_image_url)
+
+        button(type="submit")
+        a(href="/admin/sessions")

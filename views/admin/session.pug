@@ -1,0 +1,35 @@
+extends ../layouts/adminLayout.pug
+
+
+block content
+    h1 Список сеансів
+
+    if sessions.length === 0
+        p Наразі немає жодного сеансу.
+    else
+        table(border="1")
+            thead
+                tr
+                    th #
+                    th Фільм
+                    th Жанр
+                    th Час початку
+                    th Зал
+                    th Місць
+                    th Дії
+            tbody
+                each session, index in sessions
+                    tr
+                        td #{index + 1}
+                        td #{session.title}
+                        td #{session.genre}
+                        td #{session.start_time}
+                        td #{session.hall_name}
+                        td #{session.total_seats}
+                        td
+                            a(href=`/admin/sessions/${session.id}/edit`) Редагувати
+                            form(method="post", action=`/admin/sessions/${session.id}/delete`, style="display:inline")
+                                button(type="submit", onclick="return confirm('Видалити цей сеанс?')") Видалити
+
+    br
+    a(href="/admin/sessions/create") Створити новий сеанс
