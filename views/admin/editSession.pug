@@ -1,0 +1,30 @@
+extends ../layouts/adminLayout.pug
+
+block content
+    h2 Редагувати сеанс
+
+    form(id="edit-session-form")
+        input(type="hidden", name="id", value=session.id)
+
+        label(for="start_time") Час початку
+        input(id="start_time", type="datetime-local", name="start_time", value=session.start_time, required)
+
+        label(for="hall_name") Назва залу
+        input(id="hall_name", type="text", name="hall_name", value=session.hall_name, required)
+
+        label(for="total_seats") Кількість місць
+        input(id="total_seats", type="number", name="total_seats", value=session.total_seats, required)
+
+        label(for="background_image_url") Фонове зображення (URL)
+        input(id="background_image_url", type="url", name="background_image_url", value=session.background_image_url)
+
+        button(type="button", id="edit-btn") Зберегти зміни
+
+    p#form-message(style="color: green; margin-top: 10px;")
+
+    script.
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('edit-btn').addEventListener('click', () => {
+                document.getElementById('form-message').textContent = 'Зміни внесено (симуляція)';
+            });
+        });
