@@ -1,0 +1,52 @@
+extends ../layouts/adminLayout.pug
+
+block content
+    h1 Список сеансів
+
+    if sessions.length === 0
+        p Наразі немає жодного сеансу.
+    else
+        table(border="1" id="sessions-table")
+            thead
+                tr
+                    th #
+                    th Фільм
+                    th Жанр
+                    th Час початку
+                    th Зал
+                    th Місць
+                    th Дії
+            tbody
+                each session, index in sessions
+                    tr
+                        td #{index + 1}
+                        td #{session.title}
+                        td #{session.genre}
+                        td #{session.start_time}
+                        td #{session.hall_name}
+                        td #{session.total_seats}
+                        td
+                            a(href=`/admin/sessions/${session.id}/edit`) Редагувати
+                            button(type="button", class="fake-delete-btn") Видалити
+
+    br
+    a(href="/admin/sessions/create") Створити новий сеанс
+
+    // Повідомлення про фейкове видалення
+    p#fake-delete-msg(style="color: green; display: none;") Сеанс "видалено" (фейково).
+
+    // Скрипт для обробки "видалення"
+    script.
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.fake-delete-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    const row = button.closest('tr');
+                    if (confirm('Ти впевнений, що хочеш фейково видалити цей сеанс?')) {
+                        row.remove();
+                        const msg = document.getElementById('fake-delete-msg');
+                        msg.style.display = 'block';
+                        setTimeout(() => msg.style.display = 'none', 3000);
+                    }
+                });
+            });
+        });
