@@ -153,5 +153,23 @@ h2{
 .btn--right{
     right: 10px;
 }
+.error-message {
+    color: #ff6b9d; /* рожевий колір */
+    font-size: 2.2rem;
+    text-align: center;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background-color: #fff0f5; /* дуже світлий рожевий */
+    border: 3px dashed #ff9ec6; /* пунктирна рамка */
+    border-radius: 20px; /* закруглені кути */
+    max-width: 600px;
+    font-family: 'Comic Sans MS', cursive, sans-serif; /* веселий шрифт */
+    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.2); /* ніжна тінь */
+    text-shadow: 2px 2px 4px rgba(255, 182, 193, 0.5); /* світлий текст-тінь */
+    animation: bounce 0.5s ease infinite alternate; /* міні-анімація */
+}
 
-
+@keyframes bounce {
+    from { transform: translateY(0); }
+    to { transform: translateY(-10px); } /* легке підстрибування */
+}

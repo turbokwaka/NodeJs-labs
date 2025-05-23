@@ -7,7 +7,7 @@ async function listSessions(req, res, next) {
         res.render('guest/sessions', {sessions});
     } catch (error) {
         console.error('Помилка отримання сеансів:', error);
-        res.status(500).render('error', {message: 'Внутрішня помилка сервера'});
+        res.status(500).render('error', {message: 'Ми наїбнулись і не змогли витягнуть список сеансів. Бекендер буде покараний.'});
     }
 }
 
@@ -19,7 +19,7 @@ async function sessionDetails(req, res, next) {
         res.render('guest/sessionDetails', {session});
     } catch (error) {
         console.error('Помилка при перегляді сеансу. ', error);
-        res.status(500).render('error', {message: 'Помилка сервера. Спробуйте пізніше'})
+        res.status(500).render('error', {message: 'Ми наїбнулись і не найшли цей фільм. Ми звільняємо бекендера.'})
     }
 }
 

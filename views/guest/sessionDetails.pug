@@ -1,5 +1,10 @@
 extends ../layouts/guestLayout
 
+block styles
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&family=Fredoka:wght@300..700&family=Goldman:wght@400;700&family=Indie+Flower&family=Jersey+15&family=Libre+Baskerville&family=Modak&family=Press+Start+2P&family=Roboto:ital,wght@0,100..900;1,100..900&family=Saira+Stencil+One&family=Sniglet:wght@800&family=Tiny5&display=swap')
+
+
 block content
     h1.title Деталі сеансу
 
@@ -13,7 +18,7 @@ block content
 
         ul.seats
             each seat in seats
-                li.seat(class=seat.isAvailable ? 'available' : 'taken')
+                li.seat(class=seat.isAvailable ? 'available': 'taken')
                     span Місце #{seat.number}
                     if seat.isAvailable
                         form(action='/order', method='post')
