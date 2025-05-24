@@ -1,52 +1,56 @@
 extends ../layouts/adminLayout.pug
 
 block content
-    h1 Список сеансів
+    .admin-container
+        h1.admin-title Список сеансів
 
-    if sessions.length === 0
-        p Наразі немає жодного сеансу.
-    else
-        table(border="1" id="sessions-table")
-            thead
-                tr
-                    th #
-                    th Фільм
-                    th Жанр
-                    th Час початку
-                    th Зал
-                    th Місць
-                    th Дії
-            tbody
-                each session, index in sessions
-                    tr
-                        td #{index + 1}
-                        td #{session.title}
-                        td #{session.genre}
-                        td #{session.start_time}
-                        td #{session.hall_name}
-                        td #{session.total_seats}
-                        td
-                            a(href=`/admin/sessions/${session.id}/edit`) Редагувати
-                            button(type="button", class="fake-delete-btn") Видалити
+        if sessions.length === 0
+            p.empty-message Наразі немає жодного сеансу.
+        else
+            table.sessions-table
+                thead
+                    tr.table-header-row
+                        th.table-header №
+                        th.table-header Фільм
+                        th.table-header Жанр
+                        th.table-header Час початку
+                        th.table-header Зал
+                        th.table-header Місць
+                        th.table-header Дії
+                tbody
+                    each session, index in sessions
+                        tr.table-row
+                            td.table-cell #{index + 1}
+                            td.table-cell #{session.title}
+                            td.table-cell #{session.genre}
+                            td.table-cell #{session.start_time}
+                            td.table-cell #{session.hall_name}
+                            td.table-cell #{session.total_seats}
+                            td.table-cell
+                                button.btn.btn-edit(
+                                    type="button"
+                                    onclick=`window.location.href='/admin/sessions/${session.id}/edit'`
+                                ) Редагувати
+                                button.btn.btn-delete(type="button") Видалити
 
-    br
-    a(href="/admin/sessions/create") Створити новий сеанс
+        a.create-btn(href="/admin/sessions/create") Створити новий сеанс
 
-    // Повідомлення про фейкове видалення
-    p#fake-delete-msg(style="color: green; display: none;") Сеанс "видалено" (фейково).
+        // Повідомлення про фейкове видалення
+        p#fake-delete-msg.fake-delete-message(style="display: none;") Сеанс "видалено" (фейково).
 
-    // Скрипт для обробки "видалення"
-    script.
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('.fake-delete-btn').forEach(button => {
-                button.addEventListener('click', () => {
-                    const row = button.closest('tr');
-                    if (confirm('Ти впевнений, що хочеш фейково видалити цей сеанс?')) {
-                        row.remove();
-                        const msg = document.getElementById('fake-delete-msg');
-                        msg.style.display = 'block';
-                        setTimeout(() => msg.style.display = 'none', 3000);
-                    }
+        // Скрипт для обробки "видалення"
+        script.
+            document.addEventListener('DOMContentLoaded', () => {
+                document.querySelectorAll('.btn-delete').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const row = e.target.closest('tr');
+                        if (confirm('Видалити цей сеанс?')) {
+                            row.style.opacity = '0';
+                            setTimeout(() => row.remove(), 300);
+                            const msg = document.getElementById('fake-delete-msg');
+                            msg.style.display = 'block';
+                            setTimeout(() => msg.style.display = 'none', 3000);
+                        }
+                    });
                 });
             });
-        });
