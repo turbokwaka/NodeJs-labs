@@ -7,9 +7,7 @@ async function getAllSessions() {
             SELECT sessions.*, movies.title, movies.genre, movies.poster_url
             FROM sessions
             JOIN movies ON sessions.movie_id = movies.id
-            ORDER BY start_time
-            //SELECT * FROM movies
-        `);
+            ORDER BY start_time`);
         return result.recordset;
     } catch (err) {
         console.error('DB Error:', err);
@@ -24,8 +22,7 @@ async function getSessionById(id) {
             .input('id', id)
             .query(`
                 SELECT * FROM sessions WHERE id = @id
-                //SELECT * FROM movies WHERE id = @id
-            `);
+                `);
         if (result.recordset.length !== 0) {
             return result.recordset[0];
         } else {

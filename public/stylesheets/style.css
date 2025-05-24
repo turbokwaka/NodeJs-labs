@@ -1,5 +1,19 @@
 *{
     margin: 0;
+<<<<<<< HEAD
+=======
+    padding: 20px;
+}
+
+.title {
+    font-size: 24px;
+    margin-bottom: 16px;
+    font-family: sans-serif;
+}
+
+.session-list {
+    list-style: none;
+>>>>>>> 73df3ddea4c056355e22cb70bda2cfd5972fbaf1
     padding: 0;
 }
 
@@ -146,6 +160,7 @@ h2{
     color: white;
 }
 
+<<<<<<< HEAD
 .btn--left{
     left: 10px;
 }
@@ -155,3 +170,9 @@ h2{
 }
 
 
+=======
+.header-menu {
+    display: flex;
+    gap: 30px;
+}
+>>>>>>> 73df3ddea4c056355e22cb70bda2cfd5972fbaf1

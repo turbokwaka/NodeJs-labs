@@ -1,26 +1,57 @@
-extends ../layouts/guestLayout
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        title= session.title
+        link(rel="stylesheet", href="/stylesheets/film_id_style.css")
+        link(
+            href="https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&family=Fredoka:wght@300..700&family=Goldman:wght@400;700&family=Indie+Flower&family=Jersey+15&family=Libre+Baskerville&family=Modak&family=Press+Start+2P&family=Roboto:ital,wght@0,100..900;1,100..900&family=Saira+Stencil+One&family=Sniglet:wght@800&family=Tiny5&display=swap"
+            rel="stylesheet")
 
-block content
-    h1.title Деталі сеансу
+    body
+        header
+            button BobryPlex
+            nav
+                a(href="#") Link1
+                a(href="#") Link2
+                a(href="#") Link3
+                a(href="#") Link4
 
-    .session-info
-        p Назва: #{session.title}
-        p Час початку: #{session.startTime}
-        p Ціна: #{session.price} грн
+        section
+            .column--1
+                img.poster(src=session.poster_url, alt=session.title, width="350px")
+                .film-name
+                    h1= session.title
+                    - const time = new Date(session.start_time).toLocaleTimeString('uk-UA', { hour: '2-digit', minute: '2-digit' })
+                    p.film-hall= time
+                    p.film-hall= session.hall_name
 
-    if Array.isArray(seats) && seats.length > 0
-        h3 Вільні місця
+                ul
+                    li
+                        p.key Rating:
+                        p.value 18+
+                    li
+                        p.key Genre:
+                        p.value= session.genre
+                    li
+                        p.key Duration:
+                        p.value 120 min
 
-        ul.seats
-            each seat in seats
-                li.seat(class=seat.isAvailable ? 'available' : 'taken')
-                    span Місце #{seat.number}
-                    if seat.isAvailable
-                        form(action='/order', method='post')
-                            input(type='hidden', name='sessionId', value=session.id)
-                            input(type='hidden', name='seatId', value=seat.id)
-                            button(type='submit') Замовити
-                    else
-                        button.disabled(type='button' disabled) Зайнято
-    else
-        p Немає вільних місць
+            .column--2
+                each i in [1,2,3,4,5,6,7,8,9,10]
+                    .row(class='row--' + i)
+                        span.row-number Row #{i}
+                        ul
+                            each j in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
+                                li #{j}
+
+
+            .date-carousel-container
+                    .date-carousel(id="dateCarousel")
+                        each date in ['20 травня', '21 травня', '22 травня', '23 травня', '24 травня', '25 травня', '26 травня']
+                            .date= date
+                    .scroll-btn.right-btn(onclick="scrollDates(1)") &#10095;
+
+        section.hidden
+        pre= JSON.stringify(session, null, 2)
+        script(src="/scripts/film_id_script.js")
