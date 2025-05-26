@@ -261,8 +261,9 @@ main {
 .table-cell {
     padding: 1.25rem 1.5rem;
     vertical-align: middle;
-    border-bottom: 1px solid #e0e0e0; /* Суцільна лінія між рядками */
+    border-bottom: 1px solid #e0e0e0;
     position: relative;
+    text-align: center; /* Add this to center horizontally */
 }
 
 /* Останній рядок без лінії */

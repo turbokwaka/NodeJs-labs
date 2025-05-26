@@ -1,20 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const adminController = require('../controllers/adminSessionController');
+const adminSessionController = require('../controllers/adminSessionController');
+const adminTicketController = require('../controllers/adminTicketController');
 
 // CRUD для сесій
-router.get('/admin/sessions', adminController.listSessions);
-router.get('/admin/sessions/create', adminController.showCreateSession);
-router.post('/admin/sessions', adminController.createSession);
-router.get('/admin/sessions/:id/edit', adminController.showEditSession);
-router.post('/admin/sessions/:id', adminController.updateSession);
-router.post('/admin/sessions/:id/delete', adminController.deleteSession);
+router.get('/admin/sessions', adminSessionController.listSessions);
+router.get('/admin/sessions/create', adminSessionController.showCreateSession);
+router.get('/admin/sessions/:id/edit', adminSessionController.showEditSession);
 
-router.get('/admin/tickets', adminController.listSessions);
-router.get('/admin/tickets/create', adminController.showCreateSession);
-router.post('/admin/tickets', adminController.createSession);
-router.get('/admin/tickets/:id/edit', adminController.showEditSession);
-router.post('/admin/tickets/:id', adminController.updateSession);
-router.post('/admin/tickets/:id/delete', adminController.deleteSession);
+router.get('/admin/tickets', adminTicketController.listTickets);
+router.get('/admin/tickets/:id/edit', adminTicketController.showEditTicket);
 
 module.exports = router;

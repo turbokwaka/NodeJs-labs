@@ -1,11 +1,12 @@
-const sessionService = require('../services/sessionService');
+const ticketService = require('../services/ticketService');
 
-async function listSessions(req, res, next) {
+async function listTickets(req, res, next) {
     try {
-        const tickets = await sessionService.getAllSessions();
+        const tickets = await ticketService.getAllTickets();
+        console.log(tickets);
         res.render('admin/tickets', {tickets});
     } catch (error) {
-        console.error('Помилка отримання сеансів:', error);
+        console.error('Помилка отримання квитків:', error);
         res.status(500).render('error', {message: 'Внутрішня помилка сервера'});
     }
 }
@@ -36,59 +37,22 @@ async function createSession(req, res, next) {
 /**
  * Форма редагування існуючої сесії
  */
-async function showEditSession(req, res, next) {
+async function showEditTicket(req, res, next) {
     try {
-        const session = await sessionService.getSessionById(req.params.id);
-        if (!session) {
-            return res.status(404).render('error', {message: 'Сеанс не знайдено.'});
+        const ticket = await ticketService.getTicketById(req.params.id);
+        console.log(ticket);
+        if (!ticket) {
+            return res.status(404).render('error', {message: 'Квиток не знайдено.'});
         }
-        res.render('admin/editSession', {session});
+        res.render('admin/editTicket', {ticket});
     } catch (error) {
         console.error('Помилка відображення форми редагування:', error);
         res.status(500).render('error', {message: 'Внутрішня помилка сервера.'});
     }
 }
 
-/**
- * Обробка оновлення сесії
- */
-async function updateSession(req, res, next) {
-    try {
-        const updatedData = req.body;
-        const result = await sessionService.updateSession(req.params.id, updatedData);
-        if (result.error) {
-            return res
-                .status(400)
-                .render('error', {message: result.error});
-        }
-        res.redirect('/admin/sessions');
-    } catch (error) {
-        console.error('Помилка редагування сеансу:', error);
-        res.status(500).render('error', {message: 'Внутрішня помилка сервера.'});
-    }
-}
-
-/**
- * Видалення сесії
- */
-async function deleteSession(req, res, next) {
-    try {
-        const result = await sessionService.deleteSession(req.params.id);
-        if (result.error) {
-            return res.status(400).render('error', {message: result.error});
-        }
-        res.redirect('/admin/sessions');
-    } catch (error) {
-        console.error('Помилка видалення сеансу:', error);
-        res.status(500).render('error', {message: 'Внутрішня помилка сервера.'});
-    }
-}
-
 module.exports = {
-    listSessions,
-    showCreateSession,
+    listTickets,
     createSession,
-    showEditSession,
-    updateSession,
-    deleteSession,
+    showEditTicket,
 };

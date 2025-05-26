@@ -49,7 +49,7 @@ block content
             async function deleteSession(id, rowElement) {
                 try {
                     console.log("Deleting ID:" + id)
-                    const response = await fetch(`http://localhost:1337/api/sessions/${id}`, {
+                    const response = await fetch(`http://31.43.170.177:1337/api/sessions/${id}`, {
                         method: 'DELETE'
                     });
 

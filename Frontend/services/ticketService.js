@@ -1,44 +1,66 @@
 const {poolPromise} = require('../databases/db');
 
-async function orderTicket(sessionId, seatId) {
+async function getAllTickets() {
     try {
-        const pool = await poolPromise;
+        const ticketsResponse = await fetch('http://31.43.170.177:1337/api/tickets');
 
-        const seatCheck = await pool.request()
-            .input('sessionId', sessionId)
-            .input('seatId', seatId)
-            .query(`
-                SELECT * FROM seats 
-                WHERE id = @seatId AND session_id = @sessionId
-            `);
-
-        if (seatCheck.recordset.length === 0) {
-            throw new Error('Місце не існує');
+        if (!ticketsResponse.ok) {
+            throw new Error(`HTTP помилка! Статус: ${ticketsResponse.status}`);
         }
 
-        const ticketCheck = await pool.request()
-            .input('sessionId', sessionId)
-            .input('seatId', seatId)
-            .query(`
-                SELECT * FROM tickets 
-                WHERE seat_id = @seatId AND session_id = @sessionId AND status = 'confirmed'
-            `);
+        const ticketsData = await ticketsResponse.json();
 
-        if (ticketCheck.recordset.length > 0) {
-            throw new Error('Місце вже зайняте');
+        const enrichedTickets = [];
+
+        for (ticket of ticketsData.data) {
+            let seatResponse = await fetch('http://31.43.170.177:1337/api/seats/' + ticket["seat_id"]);
+            let seatData = await seatResponse.json();
+
+            let sessionResponse = await fetch('http://31.43.170.177:1337/api/sessions/' + ticket["session_id"]);
+            let sessionData = await sessionResponse.json();
+
+            let moviesResponse = await fetch('http://31.43.170.177:1337/api/movies/' + sessionData["movie_id"]);
+            let moviesData = await moviesResponse.json();
+
+            let enrichedSession = {
+                ...ticket,
+                "movie_title": moviesData["title"],
+                "seat_row": seatData["row"],
+                "seat_number": seatData["seat_number"],
+            }
+            console.log(enrichedSession);
+
+            enrichedTickets.push(enrichedSession);
         }
 
-        await pool.request()
-            .input('sessionId', sessionId)
-            .input('seatId', seatId)
-            .query(`
-                INSERT INTO tickets (session_id, seat_id, status)
-                VALUES (@sessionId, @seatId, 'confirmed')
-            `);
+        return enrichedTickets;
     } catch (err) {
-        console.error('DB Error:', err);
         throw err;
     }
 }
 
-module.exports = {orderTicket};
+async function getTicketById(id) {
+    try {
+        const ticketResponse = await fetch('http://31.43.170.177:1337/api/tickets/' + id);
+        const ticketData = await ticketResponse.json();
+
+        const seatResponse = await fetch('http://31.43.170.177:1337/api/seats/' + ticketData["seat_id"]);
+        const seatData = await seatResponse.json();
+
+        const enrichedTicket = {
+            ...ticketData,
+            seat_row: seatData["row"],
+            seat_number: seatData["seat_number"],
+        }
+
+        return await enrichedTicket;
+    } catch (err){
+        throw err;
+    }
+}
+
+
+module.exports = {
+    getAllTickets,
+    getTicketById,
+};

@@ -1,0 +1,25 @@
+extends ../layouts/adminLayout.pug
+
+block scripts
+    script(src="/js/editTicket.js")
+
+block content
+    h2 Редагувати моє їбало
+
+    form(id="edit-session-form")
+        input(type="hidden", name="id", value=ticket.id)
+        input(type="hidden", name="seat_id", value=ticket.seat_id)
+
+        label(for="guest_name") Гість
+        input(id="guest_name", type="text", name="guest_name", value=ticket.guest_name, required)
+
+        label(for="status") Статус
+        input(id="status", type="text", name="status", value=ticket.status, required)
+
+        label(for="seat_row") Ряд
+        input(id="seat_row", type="number", name="seat_row", value=ticket.seat_row, required)
+
+        label(for="seat_number") Місце
+        input(id="seat_number", type="number", name="seat_number", value=ticket.seat_number, required)
+
+        button(type="button", id="edit-btn", onclick="updateTicket()") Зберегти зміни

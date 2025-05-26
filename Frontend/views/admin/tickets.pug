@@ -1,0 +1,84 @@
+extends ../layouts/adminLayout.pug
+
+block scripts
+
+block content
+    .admin-container
+        h1.admin-title Список квитків
+
+        if tickets.length === 0
+            p.empty-message Наразі немає жодного квитка.
+        else
+            table.sessions-table
+                thead
+                    tr.table-header-row
+                        th.table-header №
+                        th.table-header Час резервації
+                        th.table-header Гість
+                        th.table-header Статус
+                        th.table-header Фільм
+                        th.table-header Ряд
+                        th.table-header Місце
+                        th.table-header Дії
+                tbody
+                    each ticket, index in tickets
+                        tr.table-row
+                            td.table-cell #{index + 1}
+                            td.table-cell #{ticket.reserved_at}
+                            td.table-cell #{ticket.guest_name}
+                            td.table-cell #{ticket.status}
+                            td.table-cell #{ticket.movie_title}
+                            td.table-cell #{ticket.seat_row}
+                            td.table-cell #{ticket.seat_number}
+                            td.table-cell
+                                button.btn.btn-edit(
+                                    type="button"
+                                    onclick=`window.location.href='/admin/tickets/${ticket.id}/edit'`
+                                ) Редагувати
+                                button.btn.btn-delete(
+                                    type="button"
+                                    data-id=ticket.id
+                                ) Видалити
+
+        a.create-btn(href="/admin/sessions/create") Створити новий сеанс
+
+        // Повідомлення про фейкове видалення
+        p#fake-delete-msg.fake-delete-message(style="display: none;") Сеанс "видалено" (фейково).
+
+        // Скрипт для обробки "видалення"
+        script.
+            async function deleteSession(id, rowElement) {
+                try {
+                    console.log("Deleting ID:" + id)
+                    const response = await fetch(`http://31.43.170.177:1337/api/tickets/${id}`, {
+                        method: 'DELETE'
+                    });
+
+                    console.log(response)
+
+                    if (response.ok || response.status === 204) {
+                        rowElement.style.opacity = '0';
+                        setTimeout(() => rowElement.remove(), 300);
+
+                        alert('Квиток успішно видалено!');
+                    } else {
+                        alert('Помилка при видаленні квитка!');
+                    }
+                } catch (error) {
+                    console.error('Помилка:', error);
+                    alert('Сталася помилка при спробі видалення!');
+                }
+            }
+
+            document.addEventListener('DOMContentLoaded', () => {
+                document.querySelectorAll('.btn-delete').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const row = e.target.closest('tr');
+                        const sessionId = e.target.getAttribute('data-id');
+
+                        if (confirm('Ви впевнені, що хочете видалити цей квиток?')) {
+                            deleteSession(sessionId, row);
+                        }
+                    });
+                });
+            });

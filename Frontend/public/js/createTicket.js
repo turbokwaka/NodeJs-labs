@@ -1,4 +1,4 @@
-function createSession() {
+function createTicket() {
     const form = document.getElementById('edit-session-form');
 
     const formData = new FormData(form);
@@ -13,12 +13,14 @@ function createSession() {
 
     console.log(data);
 
+    const id = formData.get('id');
+
     createSessionAPI(data).then();
 }
 
-async function createSessionAPI(data) {
+async function createTicketAPI(data) {
     try {
-        const response = await fetch(`http://localhost:1337/api/sessions`, {
+        const response = await fetch(`http://localhost:1337/api/tickets/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

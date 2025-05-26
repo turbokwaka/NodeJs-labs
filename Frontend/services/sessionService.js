@@ -3,7 +3,7 @@ const {poolPromise} = require('../databases/db');
 async function getAllSessions() {
     try {
         // Отримуємо дані з API за допомогою fetch
-        const sessionsResponse = await fetch('http://localhost:1337/api/sessions'); // замініть на реальний URL
+        const sessionsResponse = await fetch('http://31.43.170.177:1337/api/sessions'); // замініть на реальний URL
 
         if (!sessionsResponse.ok) {
             throw new Error(`HTTP помилка! Статус: ${sessionsResponse.status}`);
@@ -15,7 +15,7 @@ async function getAllSessions() {
         const enrichedSessions = [];
 
         for (session of sessionsData.data) {
-            let movieResponse = await fetch('http://localhost:1337/api/movies/' + session["movie_id"]);
+            let movieResponse = await fetch('http://31.43.170.177:1337/api/movies/' + session["movie_id"]);
             let movieData = await movieResponse.json();
 
             let enrichedSession = {
