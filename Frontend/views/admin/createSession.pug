@@ -1,9 +1,12 @@
 extends ../layouts/adminLayout.pug
 
+block scripts
+    script(src="/js/createSession.js")
+
 block content
     h2 Створити новий сеанс
 
-    form(id="create-session-form")
+    form(id="edit-session-form")
         label(for="movie_id") ID фільму
         input(id="movie_id" type="number", name="movie_id", required)
 
@@ -19,13 +22,4 @@ block content
         label(for="background_image_url") Фонове зображення (URL)
         input(id="background_image_url" type="url", name="background_image_url")
 
-        button(type="button", id="create-btn") Створити сеанс
-
-    p#form-message(style="color: green; margin-top: 10px;")
-
-    script.
-        document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('create-btn').addEventListener('click', () => {
-                document.getElementById('form-message').textContent = 'Сеанс створено (симуляція)';
-            });
-        });
+        button(type="button", id="create-btn", onclick="createSession()") Створити сеанс
