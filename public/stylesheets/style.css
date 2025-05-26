@@ -14,7 +14,6 @@ header{
 }
 
 button{
-    color: white;
     background-color: red;
     border-radius: 20px;
     margin-left: 15px;
@@ -25,12 +24,17 @@ button{
     font-weight: 400;
     font-style: normal;
     letter-spacing: 1px;
+    cursor: pointer;
+}
+
+.main-btn{
+    cursor: pointer;
+    color: white;
 }
 
 nav{
-    width: 20%;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     margin-right: 15px;
 }
 

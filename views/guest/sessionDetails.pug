@@ -1,22 +1,10 @@
-doctype html
-html(lang="en")
-    head
-        meta(charset="UTF-8")
-        title= session.title
-        link(rel="stylesheet", href="/stylesheets/film_id_style.css")
-        link(
-            href="https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&family=Fredoka:wght@300..700&family=Goldman:wght@400;700&family=Indie+Flower&family=Jersey+15&family=Libre+Baskerville&family=Modak&family=Press+Start+2P&family=Roboto:ital,wght@0,100..900;1,100..900&family=Saira+Stencil+One&family=Sniglet:wght@800&family=Tiny5&display=swap"
-            rel="stylesheet")
+extends ../layouts/guestLayout
 
-    body
-        header
-            button BobryPlex
-            nav
-                a(href="#") Link1
-                a(href="#") Link2
-                a(href="#") Link3
-                a(href="#") Link4
+block styles
+    link(rel='stylesheet', href='/stylesheets/film_id_style.css')
+    link(rel='stylesheet', href='https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&family=Fredoka:wght@300..700&family=Goldman:wght@400;700&family=Indie+Flower&family=Jersey+15&family=Libre+Baskerville&family=Modak&family=Press+Start+2P&family=Roboto:ital,wght@0,100..900;1,100..900&family=Saira+Stencil+One&family=Sniglet:wght@800&family=Tiny5&display=swap')
 
+block content
         section
             .column--1
                 img.poster(src=session.poster_url, alt=session.title, width="350px")
@@ -29,29 +17,35 @@ html(lang="en")
                 ul
                     li
                         p.key Rating:
-                        p.value 18+
+                        p.value= session.age_rating
                     li
                         p.key Genre:
                         p.value= session.genre
                     li
                         p.key Duration:
-                        p.value 120 min
+                        p.value= session.duration_minutes + " min"
 
             .column--2
-                each i in [1,2,3,4,5,6,7,8,9,10]
-                    .row(class='row--' + i)
-                        span.row-number Row #{i}
+                each rowObj in rows
+                    .row(class='row--' + rowObj.rowNumber)
+                        span.row-number Row #{rowObj.rowNumber}
                         ul
-                            each j in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
-                                li #{j}
+                            each seat in rowObj.seats
+                                li.seat(data-seat=seat)= seat
 
 
             .date-carousel-container
                     .date-carousel(id="dateCarousel")
-                        each date in ['20 травня', '21 травня', '22 травня', '23 травня', '24 травня', '25 травня', '26 травня']
+                        each date in dates
                             .date= date
                     .scroll-btn.right-btn(onclick="scrollDates(1)") &#10095;
 
         section.hidden
-        //pre= JSON.stringify(session, null, 2)
-        script(src="/scripts/film_id_script.js")
+
+        #overlay
+            include orderTicket.pug
+
+block scripts
+    script(src="/stylesheets/film_id_script.js")
+    script(defer src="/stylesheets/orderTicket_script.js")
+

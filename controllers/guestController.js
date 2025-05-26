@@ -1,6 +1,7 @@
 const sessionService = require('../services/sessionService');
 const ticketService = require('../services/ticketService');
 
+
 async function listSessions(req, res, next) {
     try {
         const sessions = await sessionService.getAllSessions();
@@ -17,6 +18,45 @@ async function sessionDetails(req, res, next) {
 
         const session = await sessionService.getSessionById(id);
         res.render('guest/sessionDetails', {session});
+        /*
+        const sessionId = req.params.id;
+        const session = await sessionService.getSessionById(sessionId); // session включає session.seats
+
+        // Групуємо місця по рядах
+        const seatsByRows = {};
+
+        session.seats.forEach(seat => {
+            if (!seatsByRows[seat.row]) {
+                seatsByRows[seat.row] = [];
+            }
+            seatsByRows[seat.row].push(seat.seat_number);
+        });
+
+        // Впорядковуємо ряди і номери місць
+        const rows = Object.keys(seatsByRows)
+            .sort((a, b) => a - b)
+            .map(rowNumber => ({
+                rowNumber,
+                seats: seatsByRows[rowNumber].sort((a, b) => a - b)
+            }));
+
+        const today = new Date();
+
+        const availableDates = Array.from({ length: 14 }, (_, i) => {
+            const date = new Date(today);
+            date.setDate(today.getDate() + i);
+            return date.toLocaleDateString('en-US', {
+                day: 'numeric',
+                month: 'long'
+            });
+        });
+
+        res.render('guest/sessionDetails', {
+            session,
+            rows,
+            dates: availableDates
+        });
+*/
     } catch (error) {
         console.error('Помилка при перегляді сеансу. ', error);
         res.status(500).render('error', {message: 'Ми наїбнулись і не найшли цей фільм. Ми звільняємо бекендера.'})

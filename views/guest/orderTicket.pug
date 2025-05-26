@@ -1,12 +1,19 @@
-extends ../layouts/guestLayout
+.modal#ticketModal
+    .container-ticket
+        h1.ticket-film-name Minecraft
+        p.ticket-order Ticket order
 
-block content
-    h1.title Підтвердження замовлення
+        .name-enter
+            label Enter Your Name:
+            input.name(type="text" name="name" alt="name")
 
-    .confirmation
-        p Ви успішно замовили квиток на сеанс "#{session.title}"
-        p Час початку: #{session.startTime}
-        p Місце: #{seat.number}
-        p Ціна: #{session.price} грн
+        .pay-type
+            button.ticket-confirm.ticket-active Google Pay
+            button.ticket-confirm Apple Pay
+            button.ticket-confirm Eban
 
-        a.button(href='/sessions') Повернутися до списку сеансів
+        ul
+            li.ticket-key Ticket price:
+            li.ticket-value 100 hr
+
+        button.ticket-confirm Confirm

@@ -28,6 +28,38 @@ async function getSessionById(id) {
         } else {
             throw new Error('Сеанс не знайдено');
         }
+        /*const pool = await poolPromise;
+
+        // Основний запит — деталі сесії + фільм
+        const sessionResult = await pool.request()
+            .input('id', id)
+            .query(`
+                SELECT sessions.*, movies.title, movies.genre, movies.poster_url, movies.duration_minutes, movies.age_rating
+                FROM sessions
+                JOIN movies ON sessions.movie_id = movies.id
+                WHERE sessions.id = @id
+            `);
+
+        if (sessionResult.recordset.length === 0) {
+            throw new Error('Сеанс не знайдено');
+        }
+
+        const session = sessionResult.recordset[0];
+
+        // Другий запит — місця з таблиці seats
+        const seatsResult = await pool.request()
+            .input('id', id)
+            .query(`
+                SELECT row, seat_number
+                FROM seats
+                WHERE session_id = @id
+            `);
+
+        // Повертаємо сесію + масив місць
+        return {
+            ...session,
+            seats: seatsResult.recordset
+        };*/
     } catch (err) {
         console.error('DB Error:', err);
         throw err;
