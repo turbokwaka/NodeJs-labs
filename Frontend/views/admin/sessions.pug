@@ -1,5 +1,8 @@
 extends ../layouts/adminLayout.pug
 
+block scripts
+    //script(src="js/deleteSession.js")
+
 block content
     .admin-container
         h1.admin-title Список сеансів
@@ -31,7 +34,10 @@ block content
                                     type="button"
                                     onclick=`window.location.href='/admin/sessions/${session.id}/edit'`
                                 ) Редагувати
-                                button.btn.btn-delete(type="button") Видалити
+                                button.btn.btn-delete(
+                                    type="button"
+                                    data-id=session.id
+                                    ) Видалити
 
         a.create-btn(href="/admin/sessions/create") Створити новий сеанс
 
@@ -40,16 +46,37 @@ block content
 
         // Скрипт для обробки "видалення"
         script.
+            async function deleteSession(id, rowElement) {
+                try {
+                    console.log("Deleting ID:" + id)
+                    const response = await fetch(`http://localhost:1337/api/sessions/${id}`, {
+                        method: 'DELETE'
+                    });
+
+                    console.log(response)
+
+                    if (response.ok || response.status === 204) {
+                        rowElement.style.opacity = '0';
+                        setTimeout(() => rowElement.remove(), 300);
+
+                        alert('Сеанс успішно видалено!');
+                    } else {
+                        alert('Помилка при видаленні сеансу!');
+                    }
+                } catch (error) {
+                    console.error('Помилка:', error);
+                    alert('Сталася помилка при спробі видалення!');
+                }
+            }
+
             document.addEventListener('DOMContentLoaded', () => {
                 document.querySelectorAll('.btn-delete').forEach(button => {
                     button.addEventListener('click', (e) => {
                         const row = e.target.closest('tr');
-                        if (confirm('Видалити цей сеанс?')) {
-                            row.style.opacity = '0';
-                            setTimeout(() => row.remove(), 300);
-                            const msg = document.getElementById('fake-delete-msg');
-                            msg.style.display = 'block';
-                            setTimeout(() => msg.style.display = 'none', 3000);
+                        const sessionId = e.target.getAttribute('data-id');
+
+                        if (confirm('Ви впевнені, що хочете видалити цей сеанс?')) {
+                            deleteSession(sessionId, row);
                         }
                     });
                 });

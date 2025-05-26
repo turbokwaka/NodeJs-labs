@@ -3,7 +3,7 @@ const sessionService = require('../services/sessionService');
 async function listSessions(req, res, next) {
     try {
         const sessions = await sessionService.getAllSessions();
-        res.render('admin/session', {sessions});
+        res.render('admin/sessions', {sessions});
     } catch (error) {
         console.error('Помилка отримання сеансів:', error);
         res.status(500).render('error', {message: 'Внутрішня помилка сервера'});

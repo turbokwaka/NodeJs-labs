@@ -1,5 +1,8 @@
 extends ../layouts/adminLayout.pug
 
+block scripts
+    script(src="/js/editSession.js")
+
 block content
     h2 Редагувати сеанс
 
@@ -18,13 +21,4 @@ block content
         label(for="background_image_url") Фонове зображення (URL)
         input(id="background_image_url", type="url", name="background_image_url", value=session.background_image_url)
 
-        button(type="button", id="edit-btn") Зберегти зміни
-
-    p#form-message(style="color: green; margin-top: 10px;")
-
-    script.
-        document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('edit-btn').addEventListener('click', () => {
-                document.getElementById('form-message').textContent = 'Зміни внесено (симуляція)';
-            });
-        });
+        button(type="button", id="edit-btn", onclick="updateSession()") Зберегти зміни

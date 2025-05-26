@@ -2,17 +2,33 @@ const {poolPromise} = require('../databases/db');
 
 async function getAllSessions() {
     try {
-        const pool = await poolPromise;
-        const result = await pool.request().query(`
-            SELECT sessions.*, movies.title, movies.genre, movies.poster_url
-            FROM sessions
-            JOIN movies ON sessions.movie_id = movies.id
-            ORDER BY start_time
---             SELECT * FROM movies
-        `);
-        return result.recordset;
+        // Отримуємо дані з API за допомогою fetch
+        const sessionsResponse = await fetch('http://localhost:1337/api/sessions'); // замініть на реальний URL
+
+        if (!sessionsResponse.ok) {
+            throw new Error(`HTTP помилка! Статус: ${sessionsResponse.status}`);
+        }
+
+        const sessionsData = await sessionsResponse.json();
+        console.log(sessionsData.data);
+
+        const enrichedSessions = [];
+
+        for (session of sessionsData.data) {
+            let movieResponse = await fetch('http://localhost:1337/api/movies/' + session["movie_id"]);
+            let movieData = await movieResponse.json();
+
+            let enrichedSession = {
+                ...session,
+                "title": movieData["title"],
+                "genre": movieData["genre"],
+            }
+
+            enrichedSessions.push(enrichedSession);
+        }
+
+        return enrichedSessions;
     } catch (err) {
-        console.error('DB Error:', err);
         throw err;
     }
 }
@@ -24,7 +40,6 @@ async function getSessionById(id) {
             .input('id', id)
             .query(`
                 SELECT * FROM sessions WHERE id = @id
---                 SELECT * FROM movies WHERE id = @id
             `);
         if (result.recordset.length !== 0) {
             return result.recordset[0];
@@ -57,29 +72,6 @@ async function createSession(data) {
     }
 }
 
-async function updateSession(id, data) {
-    try {
-        const {start_time, hall_name, total_seats, background_image_url} = data;
-        const pool = await poolPromise;
-        await pool.request()
-            .input('id', id)
-            .input('start_time', start_time)
-            .input('hall_name', hall_name)
-            .input('total_seats', total_seats)
-            .input('background_image_url', background_image_url)
-            .query(`
-                UPDATE sessions
-                SET start_time = @start_time,
-                    hall_name = @hall_name,
-                    total_seats = @total_seats,
-                    background_image_url = @background_image_url
-                WHERE id = @id
-            `);
-    } catch (err) {
-        console.error('DB Error:', err);
-        throw err;
-    }
-}
 
 async function deleteSession(id) {
     try {
@@ -97,6 +89,5 @@ module.exports = {
     getAllSessions,
     getSessionById,
     createSession,
-    updateSession,
     deleteSession
 };

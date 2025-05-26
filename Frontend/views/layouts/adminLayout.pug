@@ -1,0 +1,19 @@
+doctype html
+head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    link(rel="stylesheet", href="/stylesheets/adminPageStyles.css")
+    block scripts
+
+    title Адмін-панель | Кінотеатр
+html(lang="uk")
+    body
+        header
+            h1 Адмін-панель Кінотеатру
+
+        nav
+            a(href="/admin/sessions") Сеанси
+            a(href="/admin/tickets") Квитки
+            a(href="/") Вийти
+        main
+            block content
