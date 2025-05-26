@@ -1,0 +1,13 @@
+services:
+  kurwa-nodejs-api:
+    build: .
+    container_name: kurwa-nodejs-api-container
+    ports:
+      - "1337:1337"
+    environment:
+      - NODE_ENV=development
+      - PORT=1337
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
+    restart: always
