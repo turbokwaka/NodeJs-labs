@@ -6,15 +6,10 @@ block styles
 
 block content
     section.carousel-wrapper
-        .carousel
-            each session in sessions
-                a.film(href=`/sessions/${session.id}`)
-                    img.img(src=session.poster_url)
-                    .overlay
-                        h2.film-name= session.title
-
-            button.btn.btn--left &lt;
-            button.btn.btn--right &gt;
+        .carousel#filmCarousel
+            // films will be loaded by script
+        button.btn.btn--left &lt;
+        button.btn.btn--right &gt;
 
 block scripts
     script(defer src='/stylesheets/main-page-script.js')
