@@ -1,31 +1,36 @@
+//- views/sessions.pug
 extends ../layouts/guestLayout
 
 block styles
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/film_id_style.css')
     link(rel='stylesheet', href='https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&family=Fredoka:wght@300..700&family=Goldman:wght@400;700&family=Indie+Flower&family=Jersey+15&family=Libre+Baskerville&family=Modak&family=Press+Start+2P&family=Roboto:ital,wght@0,100..900;1,100..900&family=Saira+Stencil+One&family=Sniglet:wght@800&family=Tiny5&display=swap')
 
-
 block content
-    h1.title Деталі сеансу
+    section
+        .column--1
+            img.poster(id="poster", width="350px")
+            .film-name
+                h1.title title
+                p.film-hall#time time
+                p.film-hall#hall hall
+            ul
+                li
+                    p.key Rating:
+                    p.value#age_rating
+                li
+                    p.key Genre:
+                    p.value#genre
+                li
+                    p.key Duration:
+                    p.value#duration
 
-    .session-info
-        p Назва: #{session.title}
-        p Час початку: #{session.startTime}
-        p Ціна: #{session.price} грн
+        .column--2#seats-container
 
-    if Array.isArray(seats) && seats.length > 0
-        h3 Вільні місця
+        .date-carousel-container
+            .date-carousel(id="dateCarousel")
+            .scroll-btn.right-btn(onclick="scrollDates(1)") &#10095;
+        #overlay
+            include orderTicket.pug
 
-        ul.seats
-            each seat in seats
-                li.seat(class=seat.isAvailable ? 'available': 'taken')
-                    span Місце #{seat.number}
-                    if seat.isAvailable
-                        form(action='/order', method='post')
-                            input(type='hidden', name='sessionId', value=session.id)
-                            input(type='hidden', name='seatId', value=seat.id)
-                            button(type='submit') Замовити
-                    else
-                        button.disabled(type='button' disabled) Зайнято
-    else
-        p Немає вільних місць
+block scripts
+    script(defer src="/stylesheets/film_id_script.js")

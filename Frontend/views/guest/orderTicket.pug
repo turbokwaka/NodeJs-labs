@@ -1,12 +1,24 @@
-extends ../layouts/guestLayout
+.modal#ticketModal
+    .container-ticket
+        h1.ticket-film-name.title
+        p.ticket-order Ticket order
 
-block content
-    h1.title Підтвердження замовлення
+        .name-enter
+            label Enter Your Name:
+            input.name(type="text" name="name" alt="name")
 
-    .confirmation
-        p Ви успішно замовили квиток на сеанс "#{session.title}"
-        p Час початку: #{session.startTime}
-        p Місце: #{seat.number}
-        p Ціна: #{session.price} грн
+        .pay-type
+            label(for="payment-method") Select Payment Method:
+            select#payment-method(name="method")
+                option(value="Google Pay") Google Pay
+                option(value="Apple Pay") Apple Pay
+                option(value="IBAN") IBAN
+        ul
+            li.ticket-key Ticket price:
+            li.ticket-value#price
+            li.ticket-key Seat number:
+            li.ticket-value#seat
 
-        a.button(href='/sessions') Повернутися до списку сеансів
+        button.ticket-confirm Confirm
+
+#overlay

@@ -4,6 +4,21 @@ html(lang="en")
         meta(charset="UTF-8")
         title BobryPlex
         block styles
+        link(rel='stylesheet', href='/stylesheets/style.css')
     body
+        #notification.hidden
+        header
+            a(href="/")
+                button.main-btn BobryPlex
+            nav
+                a.login-btn(href="#") LogIn
+                .login-form.hidden
+                    label.login_lab Enter Your LogIn:
+                    input.login_inp(type="text" name="name" alt="name")
+                    label.login_lab Enter Your Password:
+                    input.login_inp(type="password" name="password" alt="password")
+                    button.login_submit(type="submit") Submit
+
         block content
         block scripts
+            script(src='/stylesheets/main-page-script.js')
