@@ -1,6 +1,6 @@
 .modal#ticketModal
     .container-ticket
-        h1.ticket-film-name Minecraft
+        h1.ticket-film-name.title
         p.ticket-order Ticket order
 
         .name-enter
@@ -8,12 +8,17 @@
             input.name(type="text" name="name" alt="name")
 
         .pay-type
-            button.ticket-confirm.ticket-active Google Pay
-            button.ticket-confirm Apple Pay
-            button.ticket-confirm Eban
-
+            label(for="payment-method") Select Payment Method:
+            select#payment-method(name="method")
+                option(value="Google Pay") Google Pay
+                option(value="Apple Pay") Apple Pay
+                option(value="IBAN") IBAN
         ul
             li.ticket-key Ticket price:
-            li.ticket-value 100 hr
+            li.ticket-value#price
+            li.ticket-key Seat number:
+            li.ticket-value#seat
 
         button.ticket-confirm Confirm
+
+#overlay

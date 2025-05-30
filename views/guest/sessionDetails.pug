@@ -1,3 +1,4 @@
+//- views/sessions.pug
 extends ../layouts/guestLayout
 
 block styles
@@ -5,47 +6,31 @@ block styles
     link(rel='stylesheet', href='https://fonts.googleapis.com/css2?family=DynaPuff:wght@400..700&family=Fredoka:wght@300..700&family=Goldman:wght@400;700&family=Indie+Flower&family=Jersey+15&family=Libre+Baskerville&family=Modak&family=Press+Start+2P&family=Roboto:ital,wght@0,100..900;1,100..900&family=Saira+Stencil+One&family=Sniglet:wght@800&family=Tiny5&display=swap')
 
 block content
-        section
-            .column--1
-                img.poster(src=session.poster_url, alt=session.title, width="350px")
-                .film-name
-                    h1= session.title
-                    - const time = new Date(session.start_time).toLocaleTimeString('uk-UA', { hour: '2-digit', minute: '2-digit' })
-                    p.film-hall= time
-                    p.film-hall= session.hall_name
+    section
+        .column--1
+            img.poster(id="poster", width="350px")
+            .film-name
+                h1.title title
+                p.film-hall#time time
+                p.film-hall#hall hall
+            ul
+                li
+                    p.key Rating:
+                    p.value#age_rating
+                li
+                    p.key Genre:
+                    p.value#genre
+                li
+                    p.key Duration:
+                    p.value#duration
 
-                ul
-                    li
-                        p.key Rating:
-                        p.value= session.age_rating
-                    li
-                        p.key Genre:
-                        p.value= session.genre
-                    li
-                        p.key Duration:
-                        p.value= session.duration_minutes + " min"
+        .column--2#seats-container
 
-            .column--2
-                each rowObj in rows
-                    .row(class='row--' + rowObj.rowNumber)
-                        span.row-number Row #{rowObj.rowNumber}
-                        ul
-                            each seat in rowObj.seats
-                                li.seat(data-seat=seat)= seat
-
-
-            .date-carousel-container
-                    .date-carousel(id="dateCarousel")
-                        each date in dates
-                            .date= date
-                    .scroll-btn.right-btn(onclick="scrollDates(1)") &#10095;
-
-        section.hidden
-
+        .date-carousel-container
+            .date-carousel(id="dateCarousel")
+            .scroll-btn.right-btn(onclick="scrollDates(1)") &#10095;
         #overlay
             include orderTicket.pug
 
 block scripts
-    script(src="/stylesheets/film_id_script.js")
-    script(defer src="/stylesheets/orderTicket_script.js")
-
+    script(defer src="/stylesheets/film_id_script.js")
