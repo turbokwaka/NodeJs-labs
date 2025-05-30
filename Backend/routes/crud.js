@@ -43,12 +43,6 @@ module.exports = function(model) {
         try {
             const moment = require('moment');
 
-            // if (req.body.start_time) {
-            //     console.log("Time found!");
-            //     console.log(req.body.start_time);
-            //     req.body.start_time = moment(req.body.start_time).toDate();
-            //     console.log(req.body.start_time);
-            // }
             const [updated] = await model.update(req.body, {
                 where: { id: req.params.id },
                 transaction: t

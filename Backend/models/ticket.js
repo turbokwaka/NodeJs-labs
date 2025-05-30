@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
         id         : { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
         session_id : { type: DataTypes.INTEGER, allowNull: false },
         seat_id    : { type: DataTypes.INTEGER, allowNull: false },
-        reserved_at: { type: DataTypes.DATE,    allowNull: false, defaultValue: DataTypes.NOW },
+        reserved_at: { type: DataTypes.DATE,    allowNull: false, defaultValue: sequelize.literal('GETDATE()') },
         status     : { type: DataTypes.STRING,  allowNull: false },
         expires_at : { type: DataTypes.DATE,    allowNull: true },
         guest_name : { type: DataTypes.STRING,  allowNull: true },

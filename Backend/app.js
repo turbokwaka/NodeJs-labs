@@ -21,7 +21,18 @@ Object.keys(db)
 
 app.post('/api/order', async (req, res) => {
     try {
-        const result = await orderTickets(req.body);
+        const sessionId = req.body.session_id;
+        const seatIds = req.body.seat_id;
+        const userData = req.body.user;
+        const paymentInfo = req.body.payment;
+
+        const result = await orderTickets({
+            sessionId,
+            seatIds,
+            userData,
+            paymentInfo
+        });
+
         res.status(201).json(result);
     } catch(err) {
         res.status(400).json({ error: err.message });

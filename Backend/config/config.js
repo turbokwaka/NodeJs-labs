@@ -1,15 +1,18 @@
+require('dotenv').config();
+
 module.exports = {
     development: {
-        username: "sa",
-        password: "superCool556677",
-        database: "Kino",
-        host:     "31.43.170.177",
-        port:     1433,
-        dialect:  "mssql",
+        username: process.env.DB_USERNAME,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_NAME,
+        host:     process.env.DB_HOST,
+        port:     parseInt(process.env.DB_PORT), // Convert string to number
+        dialect:  process.env.DB_DIALECT,
         dialectOptions: {
             options: {
-                encrypt: false,
-                trustServerCertificate: true
+                encrypt: process.env.DB_ENCRYPT === 'true', // Convert string to boolean
+                trustServerCertificate: process.env.DB_TRUST_SERVER_CERTIFICATE === 'true',
+                useUTC: true  // Використовувати UTC для дати
             }
         }
     }
