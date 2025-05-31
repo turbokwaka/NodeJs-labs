@@ -261,6 +261,14 @@ a{
     position: relative;
 }
 
+.seat--taken {
+    background-color: #ff0000; /* сірий колір */
+    color: #ff0000;
+    cursor: not-allowed;
+    pointer-events: none; /* блокує будь-яку взаємодію */
+    opacity: 0.6;
+}
+
 .row li:hover {
     background-color: #d32f2f;
 }
@@ -357,6 +365,24 @@ a{
     justify-content: center;
     margin-bottom: 25px;
     flex-wrap: wrap;
+}
+
+.amount-enter label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 16px;
+}
+
+.amount-enter input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    font-size: 16px;
+    /* Add these to make it clear it's not typeable */
+    background-color: #f5f5f5;
+    cursor: default;
 }
 
 .ticket-confirm {

@@ -88,6 +88,4 @@ async function deleteSession(id) {
 module.exports = {
     getAllSessions,
     getSessionById,
-    createSession,
-    deleteSession
 };

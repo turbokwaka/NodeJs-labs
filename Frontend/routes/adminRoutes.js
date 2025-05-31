@@ -5,6 +5,7 @@ const adminTicketController = require('../controllers/adminTicketController');
 
 // CRUD для сесій
 router.get('/admin/sessions', adminSessionController.listSessions);
+router.get('/admin', adminSessionController.listSessions);
 router.get('/admin/sessions/create', adminSessionController.showCreateSession);
 router.get('/admin/sessions/:id/edit', adminSessionController.showEditSession);
 

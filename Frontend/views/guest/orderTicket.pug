@@ -5,7 +5,11 @@
 
         .name-enter
             label Enter Your Name:
-            input.name(type="text" name="name" alt="name")
+            input.name(type="text" name="name" alt="name", placeholder="Tony Stark")
+
+        .name-enter
+            label Email:
+            input.email(type="text" name="email" alt="email", placeholder="BeerAmbassador@gmail.com")
 
         .pay-type
             label(for="payment-method") Select Payment Method:
@@ -13,9 +17,21 @@
                 option(value="Google Pay") Google Pay
                 option(value="Apple Pay") Apple Pay
                 option(value="IBAN") IBAN
+
+        .amount-enter
+            label(for="payment-amount") Payment Amount ($):
+            input#payment-amount(
+                type="number"
+                name="amount"
+                min="5"
+                step="0.1"
+                placeholder="5"
+                required
+                onkeydown="return false"
+            oninput="this.value = this.value.replace(/[^0-9.]/g, '')"
+            )
+
         ul
-            li.ticket-key Ticket price:
-            li.ticket-value#price
             li.ticket-key Seat number:
             li.ticket-value#seat
 
