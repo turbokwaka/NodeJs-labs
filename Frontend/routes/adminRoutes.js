@@ -11,5 +11,7 @@ router.get('/admin/sessions/:id/edit', adminSessionController.showEditSession);
 
 router.get('/admin/tickets', adminTicketController.listTickets);
 router.get('/admin/tickets/:id/edit', adminTicketController.showEditTicket);
+router.get('/admin/tickets/create', adminTicketController.showCreateTicket);
+
 
 module.exports = router;

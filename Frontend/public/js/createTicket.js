@@ -1,40 +1,35 @@
-function createTicket() {
+async function createTicket() {
     const form = document.getElementById('edit-session-form');
 
     const formData = new FormData(form);
 
     const data = {
-        movie_id: parseInt(formData.get('movie_id')),
-        start_time: formData.get('start_time'),
-        hall_name: formData.get('hall_name'),
-        total_seats: parseInt(formData.get('total_seats')),
-        background_image_url: formData.get('background_image_url')
+        "session_id": parseInt(formData.get('session_id')),
+        "seat_id": [parseInt(formData.get('seat_id'))],
+        "user": {
+            "name": formData.get('user_name'),
+            "email": formData.get('user_email'),
+        },
+        "payment": {
+            "method": 'adminka',
+            "amount": 1337.0
+        }
     };
 
-    console.log(data);
-
-    const id = formData.get('id');
-
-    createSessionAPI(data).then();
-}
-
-async function createTicketAPI(data) {
     try {
-        const response = await fetch(`http://localhost:1337/api/tickets/`, {
+        console.log(data)
+        const response = await fetch(`http://31.43.170.177:1337/api/order`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(data)
         });
 
-        if (!response.ok) {
-            alert("Щось пішло не так :(");
-        } else {
-            alert("Сеанс успішно додано!");
-        }
-    } catch (err) {
-        console.error('Error:', err);
-        alert("Щось пішло не так :(");
+        console.log(response)
+        if (response.ok)
+            alert("Все супер!")
+        else
+            alert("Шось пішло не так ((");
+    } catch (error) {
+        alert("Шось піщло не так :(");
     }
 }

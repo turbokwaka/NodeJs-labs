@@ -1,0 +1,22 @@
+extends ../layouts/adminLayout.pug
+
+block scripts
+    script(src="/js/createTicket.js")
+
+block content
+    h2 Створити новий сеанс
+
+    form(id="edit-session-form")
+        label(for="session_id") ID сеансу
+        input(id="session_id" type="number", name="session_id", required)
+
+        label(for="seat_id") ID місця
+        input(id="seat_id" type="number", name="seat_id", required)
+
+        label(for="user_name") Ім'я користувача
+        input(id="user_name" type="text", name="user_name", required)
+
+        label(for="user_email") Email корисувача
+        input(id="user_email" type="text", name="user_email", required)
+
+        button(type="button", id="create-btn", onclick="createTicket()") Створити сеанс

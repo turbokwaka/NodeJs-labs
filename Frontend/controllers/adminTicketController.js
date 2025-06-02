@@ -18,6 +18,10 @@ function showCreateSession(req, res) {
     res.render('admin/createSession');
 }
 
+function showCreateTicket(req, res) {
+    res.render('admin/createTicket');
+}
+
 /**
  * Обробка створення нової сесії
  */
@@ -54,5 +58,6 @@ async function showEditTicket(req, res, next) {
 module.exports = {
     listTickets,
     createSession,
+    showCreateTicket,
     showEditTicket,
 };
